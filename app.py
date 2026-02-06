@@ -10,15 +10,24 @@ st.markdown("""
 <style>
 /* App background */
 .stApp {
-    background-color: #eceff1;
+    background-color: #0f172a;
+    color: #e5e7eb;
 }
 
 /* Title container */
 .title-container {
-    background-color: #f6f7f8;
+    background-color: #111827;
     border-radius: 14px;
     padding: 2rem;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.title-container h1 {
+    color: #e5e7eb;
+}
+
+.title-container p {
+    color: #9ca3af;
 }
 
 /* Chat bubbles */
@@ -31,50 +40,55 @@ st.markdown("""
 
 /* User message */
 .user-message {
-    background-color: #dfe7ec;
-    color: #263238;
+    background-color: #1e293b;
+    color: #e5e7eb;
     margin-left: 22%;
-    border-left: 4px solid #607d8b;
+    border-left: 4px solid #38bdf8;
 }
 
 /* Assistant message */
 .assistant-message {
-    background-color: #f2f3f4;
-    color: #2e2e2e;
+    background-color: #020617;
+    color: #e5e7eb;
     margin-right: 22%;
-    border-left: 4px solid #4caf50;
+    border-left: 4px solid #22c55e;
 }
 
 /* Input box */
 .stTextInput input {
-    background-color: #f0f2f3;
+    background-color: #020617;
     border-radius: 12px;
-    border: 1px solid #b0bec5;
-    color: #263238;
+    border: 1px solid #334155;
+    color: #e5e7eb;
 }
 
 /* Buttons */
 .stButton button {
-    background-color: #607d8b;
-    color: #ffffff;
+    background-color: #2563eb;
+    color: white;
     border-radius: 10px;
     border: none;
     font-weight: 600;
 }
 
 .stButton button:hover {
-    background-color: #546e7a;
+    background-color: #1d4ed8;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #dfe3e6;
+    background-color: #020617;
+}
+
+/* Sidebar text */
+section[data-testid="stSidebar"] * {
+    color: #e5e7eb;
 }
 
 /* Footer */
 .footer {
     background: none;
-    color: #455a64;
+    color: #9ca3af;
 }
 </style>
 """, unsafe_allow_html=True)
