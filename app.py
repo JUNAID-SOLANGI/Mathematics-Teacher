@@ -39,6 +39,19 @@ st.markdown("""
         background: white;
         color: #333;
         margin-right: 20%;
+        line-height: 1.8;
+        font-size: 1.05rem;
+    }
+    .assistant-message strong {
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+    .assistant-message code {
+        background: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        color: #d63384;
     }
     .stTextInput > div > div > input {
         border-radius: 20px;
@@ -103,11 +116,22 @@ SYSTEM_PROMPT = """You are an expert mathematics tutor with years of experience 
 
 2. **Step-by-Step Approach**: You break down complex problems into simple, manageable steps. You explain each step clearly before moving to the next.
 
-3. **Visual and Intuitive**: Whenever possible, you help students visualize concepts and build intuition rather than just memorizing formulas.
+3. **Clear Formatting**: 
+   - Use **bold** for important concepts
+   - Use bullet points for lists
+   - Number your steps clearly (Step 1, Step 2, etc.)
+   - Use simple mathematical notation that students can easily read
+   - For equations, write them clearly on separate lines
+   - Avoid excessive LaTeX formatting - use simple math notation instead
+   - Example: Write "x^2 + 5x + 6" instead of complex LaTeX
+   - For fractions, write "1/2" or "numerator/denominator"
+   - Use ** for exponents: x**2 means x squared
 
-4. **Interactive**: You ask guiding questions to help students think through problems themselves, promoting deeper understanding.
+4. **Visual and Intuitive**: Whenever possible, you help students visualize concepts and build intuition rather than just memorizing formulas.
 
-5. **Comprehensive**: You cover:
+5. **Interactive**: You ask guiding questions to help students think through problems themselves, promoting deeper understanding.
+
+6. **Comprehensive**: You cover:
    - Arithmetic and basic operations
    - Algebra (equations, inequalities, polynomials)
    - Geometry and trigonometry
@@ -117,11 +141,19 @@ SYSTEM_PROMPT = """You are an expert mathematics tutor with years of experience 
    - Discrete mathematics
    - And any other mathematical topic students need help with
 
-6. **Mistake-Friendly**: When students make errors, you gently point them out and explain the correct approach without making them feel bad.
+7. **Mistake-Friendly**: When students make errors, you gently point them out and explain the correct approach without making them feel bad.
 
-7. **Multiple Methods**: You show different ways to solve problems when applicable, helping students find the approach that works best for them.
+8. **Multiple Methods**: You show different ways to solve problems when applicable, helping students find the approach that works best for them.
 
-8. **Real-World Connections**: You connect mathematical concepts to real-world applications to make learning more meaningful.
+9. **Real-World Connections**: You connect mathematical concepts to real-world applications to make learning more meaningful.
+
+FORMATTING GUIDELINES:
+- Use clear, readable text formatting
+- Avoid complex LaTeX - students find it confusing
+- Write equations simply: x^2 + 5x + 6 = 0
+- Use line breaks to separate steps
+- Box final answers using: **Answer: x = 5**
+- Use simple symbols: √ for square root, ÷ for division, × for multiplication
 
 When a student shares an image of a math problem, carefully analyze it and provide a detailed, step-by-step solution. Always check your work and ensure accuracy in your calculations and explanations."""
 
@@ -132,7 +164,7 @@ def encode_image(image_file):
         return base64.b64encode(bytes_data).decode('utf-8')
     return None
 
-def call_openrouter_api(messages, api_key):
+def call_openrouter_api(messages, api_key, has_image=False):
     """Call OpenRouter API with the messages"""
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -141,8 +173,11 @@ def call_openrouter_api(messages, api_key):
         "X-Title": "Math Tutor AI"
     }
     
+    # Use vision model if image is present, otherwise use DeepSeek R1
+    model = "openai/gpt-4.1-mini" if has_image else "deepseek/deepseek-r1-0528:free"
+    
     data = {
-        "model": "openai/gpt-4.1-mini",
+        "model": model,
         "messages": messages
     }
     
@@ -184,6 +219,17 @@ with st.sidebar:
             st.success("✅ API Key set!")
         else:
             st.warning("⚠️ Please enter your OpenRouter API key")
+    
+    st.markdown("---")
+    
+    st.markdown("### 🤖 AI Models")
+    st.markdown("""
+    **Smart Model Switching:**
+    - 📝 Text Questions → DeepSeek R1  
+    - 📸 Image Questions → Gemini 2.0 Flash
+    
+    Both are **FREE**! 🎉
+    """)
     
     st.markdown("---")
     
@@ -248,12 +294,14 @@ for message in st.session_state.messages:
                 if content["type"] == "image_url":
                     st.image(base64.b64decode(content["image_url"]["url"].split(",")[1]))
     else:
+        # Display assistant message with LaTeX support
         st.markdown(f"""
             <div class="chat-message assistant-message">
-                <strong>🤖 Math Tutor:</strong><br>
-                {message["content"]}
+                <strong>🤖 Math Tutor:</strong>
             </div>
             """, unsafe_allow_html=True)
+        # Render the content with LaTeX support
+        st.markdown(message["content"], unsafe_allow_html=True)
 
 # Input area
 col1, col2 = st.columns([3, 1])
@@ -320,6 +368,9 @@ if send_button and (user_input or uploaded_file):
             "content": user_message_content
         })
         
+        # Check if there's an image in the message
+        has_image = not isinstance(user_message_content, str)
+        
         # Prepare messages for API call
         api_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         
@@ -331,7 +382,7 @@ if send_button and (user_input or uploaded_file):
         
         # Show loading spinner
         with st.spinner("🤔 Thinking and solving..."):
-            response = call_openrouter_api(api_messages, st.session_state.api_key)
+            response = call_openrouter_api(api_messages, st.session_state.api_key, has_image)
         
         # Add assistant response to chat history
         st.session_state.messages.append({
@@ -347,7 +398,7 @@ st.markdown("""
     <div class="footer">
         <p><strong>Made with ❤️ by Junaid</strong></p>
         <p style="font-size: 0.9rem;">Empowering students to master mathematics, one problem at a time.</p>
-        <p style="font-size: 0.8rem; margin-top: 1rem;">Powered by DeepSeek R1 via OpenRouter</p>
+        <p style="font-size: 0.8rem; margin-top: 1rem;">Powered by DeepSeek R1 & Gemini 2.0 Flash via OpenRouter</p>
     </div>
     """, unsafe_allow_html=True)
 
