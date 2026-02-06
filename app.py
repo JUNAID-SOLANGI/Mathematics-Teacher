@@ -142,7 +142,7 @@ def call_openrouter_api(messages, api_key):
     }
     
     data = {
-        "model": "deepseek/deepseek-r1-0528:free",
+        "model": "deepseek/deepseek-r1-0528",
         "messages": messages
     }
     
