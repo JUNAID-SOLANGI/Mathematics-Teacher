@@ -8,58 +8,73 @@ import os
 # Page configuration
 st.markdown("""
 <style>
+/* App background */
 .stApp {
-    background-color: #f5f7fb;
+    background-color: #eceff1;
 }
 
+/* Title container */
 .title-container {
-    background: white;
-    border-radius: 12px;
+    background-color: #f6f7f8;
+    border-radius: 14px;
     padding: 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
+/* Chat bubbles */
 .chat-message {
-    padding: 1.2rem;
-    border-radius: 12px;
+    padding: 1.3rem;
+    border-radius: 14px;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    font-size: 1rem;
 }
 
+/* User message */
 .user-message {
-    background-color: #e8f0fe;
-    color: #1a1a1a;
-    margin-left: 25%;
-    border-left: 4px solid #4285f4;
+    background-color: #dfe7ec;
+    color: #263238;
+    margin-left: 22%;
+    border-left: 4px solid #607d8b;
 }
 
+/* Assistant message */
 .assistant-message {
-    background-color: #ffffff;
-    color: #333;
-    margin-right: 25%;
-    border-left: 4px solid #34a853;
+    background-color: #f2f3f4;
+    color: #2e2e2e;
+    margin-right: 22%;
+    border-left: 4px solid #4caf50;
 }
 
+/* Input box */
 .stTextInput input {
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    background-color: #f0f2f3;
+    border-radius: 12px;
+    border: 1px solid #b0bec5;
+    color: #263238;
 }
 
+/* Buttons */
 .stButton button {
-    background-color: #4285f4;
-    color: white;
-    border-radius: 8px;
+    background-color: #607d8b;
+    color: #ffffff;
+    border-radius: 10px;
     border: none;
     font-weight: 600;
 }
 
 .stButton button:hover {
-    background-color: #357ae8;
+    background-color: #546e7a;
 }
 
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #dfe3e6;
+}
+
+/* Footer */
 .footer {
     background: none;
-    color: #666;
+    color: #455a64;
 }
 </style>
 """, unsafe_allow_html=True)
