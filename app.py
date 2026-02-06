@@ -270,7 +270,7 @@ with st.sidebar:
 # Main content
 st.markdown("""
     <div class="title-container">
-        <h1>🧮 Math Tutor AI</h1>
+        <h1>🧮 AI Math Tutor </h1>
         <p style="color: #666; font-size: 1.2rem;">Your Personal Mathematics Learning Companion</p>
         <p style="color: #888;">Struggling with math? I'm here to help you understand every step!</p>
     </div>
@@ -396,7 +396,7 @@ st.markdown("""
     <div class="footer">
         <p><strong>Made by Junaid</strong></p>
         <p style="font-size: 0.9rem;">Empowering students to master mathematics, one problem at a time.</p>
-        <p style="font-size: 0.8rem; margin-top: 1rem;">Powered by DeepSeek R1 & Gemini 2.0 Flash via OpenRouter</p>
+       
     </div>
     """, unsafe_allow_html=True)
 
@@ -404,7 +404,7 @@ st.markdown("""
 if len(st.session_state.messages) == 0:
     st.markdown("""
         <div style="text-align: center; padding: 3rem; background: rgba(255, 255, 255, 0.9); border-radius: 15px; margin: 2rem auto; max-width: 800px;">
-            <h2 style="color: #667eea;">👋 Welcome to Math Tutor AI!</h2>
+            <h2 style="color: #667eea;">👋 Welcome to AI Math Tutor !</h2>
             <p style="color: #666; font-size: 1.1rem; margin-top: 1rem;">
                 I'm here to help you understand and solve any math problem you're struggling with.
                 Whether it's basic arithmetic or advanced calculus, I'll guide you through every step.
