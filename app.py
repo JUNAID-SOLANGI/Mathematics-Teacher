@@ -6,95 +6,64 @@ import io
 import os
 
 # Page configuration
-st.set_page_config(
-    page_title="Math Tutor AI - Your Personal Math Helper",
-    page_icon="🧮",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Custom CSS for beautiful UI
 st.markdown("""
-    <style>
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .chat-message {
-        padding: 1.5rem;
-        border-radius: 0.8rem;
-        margin-bottom: 1rem;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .user-message {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        margin-left: 20%;
-    }
-    .assistant-message {
-        background: white;
-        color: #333;
-        margin-right: 20%;
-        line-height: 1.8;
-        font-size: 1.05rem;
-    }
-    .assistant-message strong {
-        color: #667eea;
-        font-size: 1.1rem;
-    }
-    .assistant-message code {
-        background: #f0f0f0;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: 'Courier New', monospace;
-        color: #d63384;
-    }
-    .stTextInput > div > div > input {
-        border-radius: 20px;
-        border: 2px solid #667eea;
-        padding: 10px 20px;
-    }
-    .stButton > button {
-        border-radius: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 10px 30px;
-        font-weight: bold;
-        transition: all 0.3s;
-    }
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-    .title-container {
-        text-align: center;
-        padding: 2rem;
-        background: white;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-    .footer {
-        text-align: center;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        margin-top: 2rem;
-        color: white;
-    }
-    .sidebar .element-container {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
-        border-radius: 10px;
-        margin-bottom: 1rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+<style>
+.stApp {
+    background-color: #f5f7fb;
+}
+
+.title-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.chat-message {
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.user-message {
+    background-color: #e8f0fe;
+    color: #1a1a1a;
+    margin-left: 25%;
+    border-left: 4px solid #4285f4;
+}
+
+.assistant-message {
+    background-color: #ffffff;
+    color: #333;
+    margin-right: 25%;
+    border-left: 4px solid #34a853;
+}
+
+.stTextInput input {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.stButton button {
+    background-color: #4285f4;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+}
+
+.stButton button:hover {
+    background-color: #357ae8;
+}
+
+.footer {
+    background: none;
+    color: #666;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 # Initialize session state
 if "messages" not in st.session_state:
