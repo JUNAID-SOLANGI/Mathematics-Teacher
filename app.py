@@ -142,7 +142,7 @@ def call_openrouter_api(messages, api_key):
     }
     
     data = {
-        "model": "deepseek/deepseek-r1-0528",
+        "model": "openai/gpt-4.1-mini",
         "messages": messages
     }
     
