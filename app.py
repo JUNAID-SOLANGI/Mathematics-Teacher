@@ -87,8 +87,14 @@ st.markdown("""
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Try to load API key from secrets, otherwise use empty string
 if "api_key" not in st.session_state:
-    st.session_state.api_key = ""
+    try:
+        # Try to get API key from Streamlit secrets
+        st.session_state.api_key = st.secrets.get("OPENROUTER_API_KEY", "")
+    except:
+        # If secrets not available, use empty string
+        st.session_state.api_key = ""
 
 # System prompt for the math tutor
 SYSTEM_PROMPT = """You are an expert mathematics tutor with years of experience helping students of all levels. Your teaching style is:
@@ -155,18 +161,29 @@ def call_openrouter_api(messages, api_key):
 # Sidebar
 with st.sidebar:
     st.markdown("### 🔐 API Configuration")
-    api_key = st.text_input(
-        "OpenRouter API Key",
-        type="password",
-        value=st.session_state.api_key,
-        help="Get your free API key from https://openrouter.ai"
-    )
     
-    if api_key:
-        st.session_state.api_key = api_key
-        st.success("✅ API Key set!")
+    # Check if API key is loaded from secrets
+    if st.session_state.api_key and not st.session_state.get("api_key_from_user", False):
+        st.success("✅ API Key loaded from secrets!")
+        st.info("💡 Your API key is configured in secrets.toml")
+        if st.button("🔄 Use Different Key"):
+            st.session_state.api_key = ""
+            st.session_state.api_key_from_user = True
+            st.rerun()
     else:
-        st.warning("⚠️ Please enter your OpenRouter API key")
+        api_key = st.text_input(
+            "OpenRouter API Key",
+            type="password",
+            value=st.session_state.api_key if st.session_state.get("api_key_from_user", False) else "",
+            help="Get your free API key from https://openrouter.ai"
+        )
+        
+        if api_key:
+            st.session_state.api_key = api_key
+            st.session_state.api_key_from_user = True
+            st.success("✅ API Key set!")
+        else:
+            st.warning("⚠️ Please enter your OpenRouter API key")
     
     st.markdown("---")
     
