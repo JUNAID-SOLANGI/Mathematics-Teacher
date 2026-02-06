@@ -394,7 +394,7 @@ if send_button and (user_input or uploaded_file):
 # Footer
 st.markdown("""
     <div class="footer">
-        <p><strong>Made with ❤️ by Junaid</strong></p>
+        <p><strong>Made by Junaid</strong></p>
         <p style="font-size: 0.9rem;">Empowering students to master mathematics, one problem at a time.</p>
         <p style="font-size: 0.8rem; margin-top: 1rem;">Powered by DeepSeek R1 & Gemini 2.0 Flash via OpenRouter</p>
     </div>
